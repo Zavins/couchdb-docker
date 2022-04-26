@@ -8,5 +8,10 @@ services:
     environment:
       COUCHDB_USER: admin
       COUCHDB_PASSWORD: password
- externalVolumes:
-  - pvc-name: /opt/couchdb/data
+    volumes:
+      - data:/data/couchdb
+
+volumes:
+  data:
+    driver_opts:
+      size: 2Gi
