@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: couchdb
+spec:
+  selector:
+    matchLabels:
+      app: couchdb
+  serviceName: couchdb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: couchdb
+    spec:
+      containers:
+        - name: couchdb
+          image: docker.io/library/couchdb:3.2.1
+          ports:
+            - containerPort: 5984
+              name: couchdb
+          volumeMounts:
+            - name: database-storage
+              mountPath: /opt/couchdb/data
+          envFrom:
+            - secretRef:
+                name: couchdb-credentials
+                optional: true
+  volumeClaimTemplates:
+    - metadata:
+        name: database-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 3Gi
