@@ -1,17 +1,18 @@
-version: "3.9"
+version: "3"
 
 services:
   couchdb:
-    image: couchdb
+    image: bitnami/couchdb:latest
     ports:
       - 5984:5984
     environment:
-      COUCHDB_USER: admin
-      COUCHDB_PASSWORD: password
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=password
     volumes:
-      - ./dbdata:/opt/couchdb/data
+      - data:/bitnami/couchdb
 
 volumes:
   data:
+    driver: local
     driver_opts:
       size: 2Gi
