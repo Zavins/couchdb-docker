@@ -21,7 +21,7 @@ spec:
               name: couchdb
           volumeMounts:
             - name: database-storage
-              mountPath: /opt/couchdb/data
+              persistentVolumeClaim: /opt/couchdb/data
           envFrom:
             - secretRef:
                 name: couchdb-credentials
